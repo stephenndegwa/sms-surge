@@ -101,6 +101,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_settings: {
+        Row: {
+          business_address: string | null
+          company_name: string | null
+          created_at: string | null
+          dark_mode: boolean | null
+          date_format: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          industry: string | null
+          language: string | null
+          phone_number: string | null
+          timezone: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          business_address?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          dark_mode?: boolean | null
+          date_format?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          industry?: string | null
+          language?: string | null
+          phone_number?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          business_address?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          dark_mode?: boolean | null
+          date_format?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          industry?: string | null
+          language?: string | null
+          phone_number?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

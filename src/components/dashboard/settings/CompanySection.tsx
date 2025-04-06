@@ -1,43 +1,68 @@
-import React from "react";
 
-interface InputFieldProps {
-  label: string;
-  value: string;
-  isTextarea?: boolean;
+import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { UserSettings } from "@/services/settingsService";
+
+interface CompanySectionProps {
+  settings: UserSettings;
+  onSave: (data: Partial<UserSettings>) => void;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  label,
-  value,
-  isTextarea = false,
-}) => {
-  return (
-    <>
-      <div className="mt-[13px]">{label}</div>
-      {isTextarea ? (
-        <div className="bg-[color(display-p3_0.9725_0.9725_0.9686)] self-stretch min-h-[104px] overflow-hidden leading-5 mt-[9px] pl-[11px] pr-[121px] pt-[5px] pb-[79px] rounded-xl max-md:pr-5">
-          {value}
-        </div>
-      ) : (
-        <div className="justify-center bg-[color(display-p3_0.9725_0.9725_0.9686)] self-stretch flex min-h-7 overflow-hidden mt-[7px] px-4 py-2 rounded-xl">
-          <div className="min-w-60 w-[358px] overflow-hidden">{value}</div>
-        </div>
-      )}
-    </>
-  );
-};
+const CompanySection: React.FC<CompanySectionProps> = ({ settings, onSave }) => {
+  const [formData, setFormData] = useState({
+    company_name: settings?.company_name || "",
+    business_address: settings?.business_address || "",
+    industry: settings?.industry || "",
+  });
 
-const CompanySection: React.FC = () => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBlur = () => {
+    onSave(formData);
+  };
+
   return (
     <>
       <div className="text-[13px] leading-loose mt-[30px]">Company Details</div>
-      <InputField label="Company Name" value="Acme Corporation" />
-      <InputField
-        label="Business Address"
-        value="123 Business Ave, Suite 100, San Francisco, CA 94107"
-        isTextarea={true}
-      />
-      <InputField label="Industry" value="Technology" />
+      
+      <div className="mt-[13px]">Company Name</div>
+      <div className="mt-[7px]">
+        <Input
+          name="company_name"
+          value={formData.company_name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="min-h-7 rounded-xl"
+        />
+      </div>
+      
+      <div className="mt-[13px]">Business Address</div>
+      <div className="mt-[9px]">
+        <Textarea
+          name="business_address"
+          value={formData.business_address}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="min-h-[104px] rounded-xl resize-none"
+        />
+      </div>
+      
+      <div className="mt-[13px]">Industry</div>
+      <div className="mt-[7px]">
+        <Input
+          name="industry"
+          value={formData.industry}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="min-h-7 rounded-xl"
+        />
+      </div>
     </>
   );
 };
